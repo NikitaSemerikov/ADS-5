@@ -16,8 +16,8 @@ int apply(int a, int b, char op) {
     case '-': return a - b;
     case '*': return a * b;
     case '/': return a / b;
+    default: return 0;
   }
-  return 0;
 }
 
 std::string infx2pstfx(std::string inf) {
@@ -40,7 +40,7 @@ std::string infx2pstfx(std::string inf) {
         out += st.get();
         out += ' ';
       }
-      st.get();  // remove '('
+      st.get();
     } else if (!std::isspace(c)) {
       while (!st.isEmpty() && priority(st.see()) >= priority(c)) {
         out += st.get();
