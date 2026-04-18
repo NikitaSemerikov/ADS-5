@@ -21,7 +21,7 @@ int apply(int a, int b, char op) {
 }
 
 std::string infx2pstfx(std::string inf) {
-  TStack<char, 256> st;
+  TStack<char, 100> st;
   std::string out;
 
   for (size_t i = 0; i < inf.size(); ++i) {
@@ -40,7 +40,9 @@ std::string infx2pstfx(std::string inf) {
         out += st.get();
         out += ' ';
       }
-      st.get();
+      if (!st.isEmpty()) {
+        st.get();
+      }
     } else if (!std::isspace(c)) {
       while (!st.isEmpty() && priority(st.see()) >= priority(c)) {
         out += st.get();
@@ -55,11 +57,15 @@ std::string infx2pstfx(std::string inf) {
     out += ' ';
   }
 
+  if (!out.empty() && out.back() == ' ') {
+    out.pop_back();
+  }
+
   return out;
 }
 
 int eval(std::string post) {
-  TStack<int, 256> st;
+  TStack<int, 100> st;
 
   for (size_t i = 0; i < post.size(); ++i) {
     if (std::isdigit(post[i])) {
