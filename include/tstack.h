@@ -32,6 +32,27 @@ class TStack {
   T see() const {
     return data[topIndex];
   }
+
+  int getSize() const {
+    return topIndex + 1;
+  }
+
+  // Обёртки для совместимости с чужим кодом
+  void push(const T& val) {
+    put(val);
+  }
+
+  T pop() {
+    return get();
+  }
+
+  T top() const {
+    return see();
+  }
+
+  bool empty() const {
+    return isEmpty();
+  }
 };
 
 #endif  // INCLUDE_TSTACK_H_
