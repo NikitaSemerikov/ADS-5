@@ -5,7 +5,8 @@
 template<typename T, int size>
 class TStack {
  private:
-  T data[size];
+  static const int kSize = size;
+  T data[kSize];
   int topIndex;
 
  public:
@@ -16,28 +17,33 @@ class TStack {
   }
 
   bool isFull() const {
-    return topIndex >= size - 1;
+    return topIndex >= kSize - 1;
   }
 
   void put(const T& val) {
     if (!isFull()) {
-      data[++topIndex] = val;
+      ++topIndex;
+      data[topIndex] = val;
     }
   }
 
   T get() {
-    return data[topIndex--];
+    if (isEmpty()) {
+      return T();
+    }
+    T val = data[topIndex];
+    --topIndex;
+    return val;
   }
 
   T see() const {
+    if (isEmpty()) {
+      return T();
+    }
     return data[topIndex];
   }
 
-  int getSize() const {
-    return topIndex + 1;
-  }
-
-  // Обёртки для совместимости с чужим кодом
+  // Обёртки для совместимости с тестами
   void push(const T& val) {
     put(val);
   }
