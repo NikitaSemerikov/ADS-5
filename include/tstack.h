@@ -32,10 +32,6 @@ class TStack {
   T see() const {
     return data[topIndex];
   }
-
-  int getSize() const {
-    return topIndex + 1;
-  }
 };
 
 #endif  // INCLUDE_TSTACK_H_
