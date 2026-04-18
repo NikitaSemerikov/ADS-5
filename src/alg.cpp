@@ -29,7 +29,8 @@ std::string infx2pstfx(std::string inf) {
 
     if (std::isdigit(c)) {
       while (i < inf.size() && std::isdigit(inf[i])) {
-        out += inf[i++];
+        out += inf[i];
+        ++i;
       }
       out += ' ';
       --i;
@@ -77,11 +78,20 @@ int eval(std::string post) {
       st.put(x);
       --i;
     } else if (!std::isspace(post[i])) {
+      if (st.isEmpty()) {
+        return 0;
+      }
       int b = st.get();
+      if (st.isEmpty()) {
+        return 0;
+      }
       int a = st.get();
       st.put(apply(a, b, post[i]));
     }
   }
 
+  if (st.isEmpty()) {
+    return 0;
+  }
   return st.get();
 }
