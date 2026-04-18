@@ -20,7 +20,7 @@ int apply(int a, int b, char op) {
   }
 }
 
-std::string infx2pstfx(std::string inf) {
+std::string infx2pstfx(const std::string& inf) {
   TStack<char, 100> st;
   std::string out;
 
@@ -65,7 +65,7 @@ std::string infx2pstfx(std::string inf) {
   return out;
 }
 
-int eval(std::string post) {
+int eval(const std::string& post) {
   TStack<int, 100> st;
 
   for (size_t i = 0; i < post.size(); ++i) {
@@ -78,20 +78,14 @@ int eval(std::string post) {
       st.put(x);
       --i;
     } else if (!std::isspace(post[i])) {
-      if (st.isEmpty()) {
-        return 0;
-      }
+      if (st.isEmpty()) return 0;
       int b = st.get();
-      if (st.isEmpty()) {
-        return 0;
-      }
+      if (st.isEmpty()) return 0;
       int a = st.get();
       st.put(apply(a, b, post[i]));
     }
   }
 
-  if (st.isEmpty()) {
-    return 0;
-  }
+  if (st.isEmpty()) return 0;
   return st.get();
 }
